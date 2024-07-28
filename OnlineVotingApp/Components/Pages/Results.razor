@@ -1,0 +1,75 @@
+﻿@page "/results"
+@using OnlineVotingApp.Services
+@inject VoteService VoteService
+@attribute [Authorize]
+@using Microsoft.AspNetCore.Authorization
+
+<PageTitle>Results</PageTitle>
+
+<h3 class="text-center mt-4 mb-4">Voting Results</h3>
+
+<div class="container mt-4">
+    @if (results != null && results.Any())
+    {
+        <div class="row">
+            @foreach (var result in results)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card border-dark">
+                        <div class="card-body">
+                            <h5 class="card-title">@result.CandidateName</h5>
+                            <p class="card-text">Votes: @result.VoteCount</p>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: @result.Percentage" aria-valuenow="@result.Percentage" aria-valuemin="0" aria-valuemax="100">@result.Percentage</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p class="text-center">No results available.</p>
+    }
+</div>
+
+<style>
+    .progress {
+        height: 30px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .progress-bar {
+        transition: width 0.6s ease;
+        background-color: #f7c10e; /* Warna kuning */
+        color: #000; /* Warna teks hitam */
+        text-align: center;
+        line-height: 30px;
+        font-size: 14px;
+    }
+
+    .card {
+        border: 1px solid #333; /* Warna border hitam */
+    }
+
+    .card-body {
+        background-color: #fff; /* Warna latar belakang putih */
+        color: #333; /* Warna teks hitam */
+    }
+
+    .card-title {
+        color: #000; /* Warna teks hitam */
+    }
+</style>
+
+@code {
+    private List<VoteService.VoteResult> results;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Memanggil metode async dengan await
+        results = await VoteService.GetResultsAsync();
+    }
+}

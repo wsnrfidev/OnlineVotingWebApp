@@ -1,0 +1,115 @@
+﻿@page "/voting"
+@using OnlineVotingApp.Services
+@inject VoteService VoteService
+@inject IJSRuntime JS
+@attribute [Authorize]
+@using Microsoft.AspNetCore.Authorization
+
+<PageTitle>Voting</PageTitle>
+
+<style>
+    /* CSS khusus untuk halaman Voting */
+
+    .btn-custom {
+        background-color: #f4c542; /* Warna kuning */
+        color: #fff; /* Warna teks putih */
+        border: none;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+        .btn-custom:hover {
+            background-color: #fff; /* Warna latar belakang saat hover */
+            color: #333; /* Warna teks saat hover */
+            border: 1px solid #f4c542; /* Border kuning saat hover */
+        }
+
+    .card {
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 1.5rem; /* Jarak antara card */
+    }
+
+    .card-img-top {
+        border-bottom: 1px solid #ddd; /* Garis bawah pada gambar card */
+    }
+
+    .modal-content {
+        border-radius: 10px;
+    }
+
+    h3 {
+        color: #333; /* Warna teks untuk judul */
+    }
+</style>
+
+<div class="container mt-4">
+    <h3 class="text-center mb-4">Vote for Your Favorite Candidate</h3>
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm border-light">
+                <img src="/Images/Alya.png" class="card-img-top" alt="Candidate 1" style="width: 100%; height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">Candidate 1</h5>
+                    <p class="card-text">Description of Candidate 1.</p>
+                    <button class="btn btn-custom" @onclick="@( () => VoteAsync("Candidate 1") )">Vote</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm border-light">
+                <img src="/Images/Fern.jpeg" class="card-img-top" alt="Candidate 2" style="width: 100%; height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">Candidate 2</h5>
+                    <p class="card-text">Description of Candidate 2.</p>
+                    <button class="btn btn-custom" @onclick="@( () => VoteAsync("Candidate 2") )">Vote</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm border-light">
+                <img src="/Images/Frieren.jpg" class="card-img-top" alt="Candidate 3" style="width: 100%; height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">Candidate 3</h5>
+                    <p class="card-text">Description of Candidate 3.</p>
+                    <button class="btn btn-custom" @onclick="@( () => VoteAsync("Candidate 3") )">Vote</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="voteModal" tabindex="-1" role="dialog" aria-labelledby="voteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="voteModalLabel">Vote Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @message
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string message;
+
+    private async Task VoteAsync(string candidate)
+    {
+        await VoteService.VoteAsync(candidate);
+        message = $"You have successfully voted for {candidate}.";
+        await ShowModal();
+    }
+
+    private async Task ShowModal()
+    {
+        await JS.InvokeVoidAsync("eval", "$('#voteModal').modal('show');");
+    }
+}

@@ -1,0 +1,120 @@
+﻿@page "/contact"
+
+<PageTitle>Contact</PageTitle>
+
+<h3>Contact Us</h3>
+
+<p class="text-muted">If you have any questions or feedback, please fill out the form below. We would love to hear from you!</p>
+
+<div class="container mt-4">
+    <form method="POST" action="https://formspree.io/f/mgvwopre" onsubmit="return handleSubmit(event)" class="contact-form">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Your name" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Your email" required>
+        </div>
+        <div class="form-group">
+            <label for="message">Message</label>
+            <textarea class="form-control" id="message" name="message" rows="4" placeholder="Your message" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-custom">Send</button>
+    </form>
+
+    <!-- Success and Error messages -->
+    <div id="message-success" class="alert alert-success mt-4" role="alert" style="display:none;">
+        Your message has been sent successfully!
+    </div>
+    <div id="message-error" class="alert alert-danger mt-4" role="alert" style="display:none;">
+        There was an error sending your message. Please try again later.
+    </div>
+</div>
+
+<!-- Include this script in the page -->
+<script>
+    function handleSubmit(event) {
+        event.preventDefault();
+        const form = event.target;
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        }).then(response => {
+            if (response.ok) {
+                document.getElementById('message-success').style.display = 'block';
+                form.reset();
+            } else {
+                document.getElementById('message-error').style.display = 'block';
+            }
+        }).catch(error => {
+            document.getElementById('message-error').style.display = 'block';
+        });
+
+        return false; // Prevent default form submission
+    }
+</script>
+
+<style>
+    .contact-form {
+        max-width: 600px;
+        margin: auto;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+    }
+
+        .contact-form .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-form .form-control {
+            border-radius: 4px;
+            border: 1px solid #ced4da;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075);
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+            .contact-form .form-control:focus {
+                border-color: #007bff;
+                box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+            }
+
+        .contact-form .btn-custom {
+            background-color: #f8c300; /* Yellow color */
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-size: 18px;
+            color: #fff;
+            transition: background-color 0.3s, color 0.3s;
+            margin-top: 1rem;
+            display: block;
+            width: 100%;
+        }
+
+            .contact-form .btn-custom:hover {
+                background-color: #fff; /* White color */
+                color: #000; /* Black text */
+            }
+
+    #message-success {
+        background-color: #d4edda;
+        color: #155724;
+    }
+
+    #message-error {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+    .text-muted {
+        color: #6c757d;
+    }
+</style>

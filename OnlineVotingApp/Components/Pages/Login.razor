@@ -1,0 +1,80 @@
+﻿@page "/login"
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject ILogger<Login> Logger
+@inject NavigationManager Navigation
+
+@rendermode InteractiveServer
+
+<h3>Login</h3>
+
+<EditForm Model="@loginModel" OnValidSubmit="HandleLogin">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label for="username">Username or Email</label>
+        <InputText id="username" class="form-control" @bind-Value="loginModel.UsernameOrEmail" />
+        <ValidationMessage For="@(() => loginModel.UsernameOrEmail)" />
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <InputText id="password" type="password" class="form-control" @bind-Value="loginModel.Password" />
+        <ValidationMessage For="@(() => loginModel.Password)" />
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Login</button>
+    </div>
+</EditForm>
+
+<div>
+    <a href="register">Register as a new user</a>
+</div>
+
+@code {
+    private LoginModel loginModel = new LoginModel();
+
+    [CascadingParameter]
+    private HttpContext HttpContext { get; set; } = default!;
+
+    private async Task HandleLogin()
+    {
+        try
+        {
+            var result = await SignInManager.PasswordSignInAsync(
+                loginModel.UsernameOrEmail,
+                loginModel.Password,
+                isPersistent: false,
+                lockoutOnFailure: false
+            );
+
+            if (result.Succeeded)
+            {
+                Logger.LogInformation("User logged in.");
+                Navigation.NavigateTo("/");
+            }
+            else
+            {
+                Logger.LogWarning("Invalid login attempt.");
+                //Logger.LogWarning($"Login failed with result: {result}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "An error occurred during login.");
+        }
+    }
+
+    public class LoginModel
+    {
+        [Required]
+        public string UsernameOrEmail { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+    }
+    
+}

@@ -1,0 +1,132 @@
+﻿@page "/about"
+
+<PageTitle>About</PageTitle>
+
+<h3>About Me</h3>
+
+<p class="text-muted">Learn more about the developer behind this web application.</p>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-4">
+            <img src="/Images/Developer.jpg" alt="Profile Picture" class="img-fluid rounded-circle mb-3">
+        </div>
+        <div class="col-md-8">
+            <h4>Wisnu Rafi</h4>
+            <p>Hello! I'm Wisnu Rafi, a software developer with a passion for creating innovative and efficient solutions. My expertise spans across various technologies and programming languages. I thrive in backend development and am dedicated to building scalable and robust systems.</p>
+            <p>Connect with me on:</p>
+            <ul class="list-unstyled">
+                <li><a href="https://github.com/wsnrfidev" target="_blank" class="link-custom">GitHub</a></li>
+                <li><a href="https://linkedin.com/in/wsnrfidev" target="_blank" class="link-custom">LinkedIn</a></li>
+                <li><a href="https://instagram.com/wisnurafi_" target="_blank" class="link-custom">Instagram</a></li>
+            </ul>
+            <h5>My Experience</h5>
+            <p>I have extensive experience in backend development with a strong understanding of various programming languages and technologies. Over the years, I have developed a deep expertise in:</p>
+            <div class="skill-set">
+                <div class="skill">
+                    <h6>C++</h6>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: 90%;" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">90%</div>
+                    </div>
+                </div>
+                <div class="skill">
+                    <h6>Python</h6>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: 79%;" aria-valuenow="79" aria-valuemin="0" aria-valuemax="100">79%</div>
+                    </div>
+                </div>
+                <div class="skill">
+                    <h6>C#</h6>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">80%</div>
+                    </div>
+                </div>
+                <div class="skill">
+                    <h6>Blazor</h6>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">75%</div>
+                    </div>
+                </div>
+                <div class="skill">
+                    <h6>CSS</h6>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">40%</div>
+                    </div>
+                </div>
+                <div class="skill">
+                    <h6>HTML</h6>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: 70%;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">70%</div>
+                    </div>
+                </div>
+                <div class="skill">
+                    <h6>JavaScript</h6>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">80%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .img-fluid {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .rounded-circle {
+        border-radius: 50%;
+    }
+
+    .link-custom {
+        color: #007bff;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+        .link-custom:hover {
+            text-decoration: underline;
+        }
+
+    .text-muted {
+        color: #6c757d;
+    }
+
+    .skill-set {
+        margin-top: 20px;
+    }
+
+    .skill {
+        margin-bottom: 15px;
+    }
+
+    .progress {
+        height: 25px;
+        margin-top: 5px;
+    }
+
+    .progress-bar {
+        transition: width 0.6s ease;
+        color: white;
+        text-align: center;
+        line-height: 25px;
+        font-size: 14px;
+    }
+
+        .progress-bar[aria-valuenow="40"] {
+            background-color: #dc3545; /* Red */
+        }
+
+        .progress-bar[aria-valuenow="70"],
+        .progress-bar[aria-valuenow="75"] {
+            background-color: #ffc107; /* Yellow */
+        }
+
+        .progress-bar[aria-valuenow="80"],
+        .progress-bar[aria-valuenow="85"],
+        .progress-bar[aria-valuenow="90"] {
+            background-color: #007bff; /* Blue */
+        }
+</style>

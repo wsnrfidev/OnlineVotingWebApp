@@ -1,0 +1,68 @@
+﻿@inherits LayoutComponentBase
+@using Microsoft.AspNetCore.Components.Authorization
+@inject NavigationManager Navigation
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<div class="main-container d-flex flex-column min-vh-100">
+    <header>
+        <NavMenu />
+        <div class="container-fluid">
+            <div class="d-flex justify-content-end">
+                @if (isAuthenticated)
+                {
+                    <button class="btn btn-outline-secondary" @onclick="Logout">Logout</button>
+                }
+                else
+                {
+                    <button class="btn btn-primary" @onclick="Login">Login</button>
+                }
+            </div>
+        </div>
+    </header>
+    <main class="flex-fill">
+        @Body
+    </main>
+    <footer class="text-center p-3 bg-light">
+        &copy; 2024 Online Voting App
+    </footer>
+</div>
+
+<style>
+    .main-container {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    main {
+        flex: 1;
+        padding: 20px;
+    }
+
+    footer {
+        background: #f8f9fa;
+        padding: 10px;
+    }
+</style>
+
+@code {
+    private bool isAuthenticated;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        isAuthenticated = authState.User.Identity.IsAuthenticated;
+    }
+
+    private void Login()
+    {
+        Navigation.NavigateTo("/login");
+    }
+
+    private async Task Logout()
+    {
+        // Implement your logout logic here
+        await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        Navigation.NavigateTo("/logout");
+    }
+}

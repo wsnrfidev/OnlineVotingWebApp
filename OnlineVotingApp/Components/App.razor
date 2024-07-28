@@ -1,0 +1,29 @@
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@using OnlineVotingApp.Components.Layout
+@using OnlineVotingApp.Components.Pages
+@using OnlineVotingApp.Services
+
+<CascadingAuthenticationState>
+    <Router AppAssembly="@typeof(Program).Assembly">
+        <Found Context="routeData">
+            <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+            <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+        </Found>
+        <NotFound>
+            <LayoutView Layout="@typeof(MainLayout)">
+                <p>Sorry, there's nothing at this address.</p>
+            </LayoutView>
+        </NotFound>
+    </Router>
+</CascadingAuthenticationState>
+
+
+
+@code {
+    [CascadingParameter] public Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
+    //[CascadingParameter]
+    //private HttpContext HttpContext { get; set; } = default!;
+    //null rendermode represents SSR.
+    //private IComponentRenderMode? RenderModeForPage => HttpContext.Request.Path.StartsWithSegments("/login") ? null : InteractiveServer;
+}
